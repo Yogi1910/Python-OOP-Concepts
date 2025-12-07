@@ -1,27 +1,11 @@
-"""Demonstrates runtime polymorphism via overriding."""
+from basics.classes_and_objects import User
 
-from __future__ import annotations
+class Admin(User):
+    def get_role(self):
+        return "Adminitrator"
 
-
-class Notification:
-    def send(self, message: str) -> str:
-        raise NotImplementedError
-
-
-class EmailNotification(Notification):
-    def send(self, message: str) -> str:
-        return f"Email: {message}"
-
-
-class SmsNotification(Notification):
-    def send(self, message: str) -> str:
-        return f"SMS: {message}"
-
-
-def dispatch(notification: Notification, message: str) -> str:
-    return notification.send(message)
 
 
 if __name__ == "__main__":
-    print(dispatch(EmailNotification(), "Welcome"))
-    print(dispatch(SmsNotification(), "OTP 1234"))
+    user = Admin(name="Yogesh", phone="1234567890")
+    print(user.get_role())

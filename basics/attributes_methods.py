@@ -5,8 +5,12 @@ class User:
 
     def display_profile(self):
         return f"User {self.name} with phone {self.phone}"
+
+    # def get_role(self):      # <-- NEW
+    #     return "Generic User"
     
 
 if __name__ == "__main__":
     user = User(name="Yogesh", phone="1234567890")
     print(user.display_profile())
+    print(user.get_role())
