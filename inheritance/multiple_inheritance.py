@@ -1,25 +1,31 @@
-"""Shows mixin-style multiple inheritance and MRO."""
-
-from __future__ import annotations
+from basics.classes_and_objects import User
 
 
-class Loggable:
-    def log(self, message: str) -> None:
-        print(f"[LOG] {message}")
+class ContactInfo:
+    def __init__(self,email,address):
+        self.email = email
+        self.address = address
 
 
-class Serializable:
-    def serialize(self) -> dict[str, str]:
-        return self.__dict__
+    def show_contact(self):
+        return f"Email : {self.email}, Address : {self.address}"
 
 
-class AuditRecord(Loggable, Serializable):
-    def __init__(self, actor: str, action: str) -> None:
-        self.actor = actor
-        self.action = action
-        self.log("AuditRecord created")
+
+class Employee(User, ContactInfo):
+    def __init__(self, name, phone, email, address, employee_id):
+        User.__init__(self, name , phone)
+        ContactInfo.__init__(self, email, address)
+        self.employee_id = employee_id
+
+
+    def show_employee(self):
+        return f"{self.name} ({self.phone}) - ID: {self.employee_id}\n{self.show_contact()}"
+
+
 
 
 if __name__ == "__main__":
-    record = AuditRecord("system", "login")
-    print(record.serialize())
+    emp = Employee("Yogesh", "1234567890", "yogesh@example.com", "123 Main St", "E101") 
+    print(emp.show_employee()) 
+    print(f"\nMRO: {[cls.__name__ for cls in Employee.__mro__]}")

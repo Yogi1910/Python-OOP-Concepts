@@ -1,26 +1,28 @@
-"""Highlights super() for cooperative multiple inheritance."""
-
-from __future__ import annotations
+from basics.classes_and_objects import User
 
 
-class Notifier:
-    def __init__(self, channel: str, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
-        self.channel = channel
+class Manager(User):
+    def __init__(self, name, phone, department):
+        super().__init__(name, phone)
+        self.department = department
+
+    def show_info(self):
+        return f"Manager: {self.name}, Phone: {self.phone}, Department: {self.department}"
 
 
-class Timestamped:
-    def __init__(self, created_at: str, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
-        self.created_at = created_at
+class SeniorManager(Manager):
+    def __init__(self, name, phone, department, team_size):
+        super().__init__(name, phone, department)
+        self.team_size = team_size
 
-
-class Alert(Notifier, Timestamped):
-    def __init__(self, message: str, channel: str, created_at: str) -> None:
-        super().__init__(channel=channel, created_at=created_at)
-        self.message = message
+    def show_info(self):
+        base_info = super().show_info()
+        return f"{base_info}, Team Size: {self.team_size}"
 
 
 if __name__ == "__main__":
-    alert = Alert("Threshold crossed", "email", "2025-11-25T10:00:00Z")
-    print(alert.channel, alert.created_at, alert.message)
+    manager = Manager("Alice", "9876543210", "Engineering")
+    print(manager.show_info())
+
+    senior = SeniorManager("Bob", "5555555555", "Product", 15)
+    print(senior.show_info())

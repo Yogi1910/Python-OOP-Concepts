@@ -1,22 +1,18 @@
-"""Duck typing: behavior defined by interface, not inheritance."""
-
-from __future__ import annotations
-
-from collections.abc import Iterable
+class EmailNotification:
+    def send(self):
+        return "Sending Email Notification..."
 
 
-def total_length(items: Iterable[str]) -> int:
-    return sum(len(item) for item in items)
+class SMSNotification:
+    def send(self):
+        return "Sending SMS Notification..."
 
-
-class TagList:
-    def __init__(self, *tags: str) -> None:
-        self.tags = list(tags)
-
-    def __iter__(self):
-        return iter(self.tags)
+def notify(service):
+    return service.send()
 
 
 if __name__ == "__main__":
-    print(total_length(["dev", "ops"]))
-    print(total_length(TagList("python", "oop")))
+    email = EmailNotification()
+
+
+    print(notify(email))
